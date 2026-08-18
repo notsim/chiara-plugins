@@ -21,7 +21,7 @@ const SAFE_TOOLS = new Set([
   "INVERTI", "SLUG", "ROT13", "MORSE"
 ]);
 
-const ACTION_TYPES = new Set(["reply", "random", "tool", "lookup", "store", "read", "set", "ask", "if", "goto", "label", "end"]);
+const ACTION_TYPES = new Set(["reply", "random", "tool", "lookup", "store", "read", "set", "ask", "if", "goto", "label", "end", "http"]);
 const TRIGGER_TYPES = new Set(["regex", "command", "intent"]);
 
 function validatePlugin(p, file) {
@@ -39,6 +39,14 @@ function validatePlugin(p, file) {
   if (p.data !== undefined && (!Array.isArray(p.data) || p.data.some((d) => !d || typeof d !== "object" || typeof d.key !== "string"))) {
     throw err('data deve essere un array di oggetti con campo "key" stringa');
   }
+  if (p.permissions !== undefined && (!Array.isArray(p.permissions) || p.permissions.some((perm) => typeof perm !== "string"))) {
+    throw err('permissions deve essere un array di stringhe (es. ["phone", "name", "address"])');
+  }
+  if (p.endpoint !== undefined) {
+    if (typeof p.endpoint !== "object" || typeof p.endpoint.url !== "string") {
+      throw err("endpoint deve essere un oggetto con campo url stringa");
+    }
+  }
   if (!Array.isArray(p.actions) || p.actions.length === 0) throw err("actions deve essere un array non vuoto");
   const checkActions = (list) => {
     for (const a of list) {
@@ -50,6 +58,9 @@ function validatePlugin(p, file) {
       if (a.type === "store" || a.type === "read") { if (typeof a.key !== "string") throw err(`${a.type} richiede key`); }
       if (a.type === "set") { if (typeof a.variable !== "string") throw err("set richiede variable"); }
       if (a.type === "ask") { if (typeof a.variable !== "string" || typeof a.prompt !== "string") throw err("ask richiede variable e prompt"); }
+      if (a.type === "http") {
+        if (!a.url && !p.endpoint?.url) throw err("http richiede url o endpoint.url nel manifest");
+      }
       if (a.type === "if") {
         if (typeof a.variable !== "string") throw err("if richiede variable");
         if (a.equals === undefined && a.contains === undefined) throw err("if richiede equals o contains");

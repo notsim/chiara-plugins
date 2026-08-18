@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "id": "pizzeria",
+  "name": "Pizzeria da Mario",
+  "description": "Ordina le pizze dal menu e invia l ordine direttamente alla pizzeria.",
+  "version": "1.0.0",
+  "category": "Food",
+  "icon": "https://heychiara.xyz/assets/pizzeria-icon.png",
+  "author": {
+    "name": "Mario Rossi",
+    "email": "mario@pizzeriadamario.it"
+  },
+  "tier": "free",
+  "permissions": [
+    "phone",
+    "name"
+  ],
+  "endpoint": {
+    "url": "https://api.pizzeriadamario.it/v1/ordini",
+    "secret": "mario_secret_key_2026"
+  },
+  "trigger": {
+    "type": "command",
+    "command": "/pizza"
+  },
+  "data": [
+    {
+      "key": "margherita",
+      "nome": "Margherita",
+      "prezzo": "6.00 €",
+      "ingredienti": "Pomodoro, mozzarella fior di latte, basilico"
+    },
+    {
+      "key": "diavola",
+      "nome": "Diavola",
+      "prezzo": "7.50 €",
+      "ingredienti": "Pomodoro, mozzarella, salame piccante"
+    },
+    {
+      "key": "quattro formaggi",
+      "nome": "4 Formaggi",
+      "prezzo": "8.50 €",
+      "ingredienti": "Mozzarella, gorgonzola, fontina, parmigiano"
+    },
+    {
+      "key": "capricciosa",
+      "nome": "Capricciosa",
+      "prezzo": "8.50 €",
+      "ingredienti": "Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive"
+    }
+  ],
+  "actions": [
+    {
+      "type": "ask",
+      "variable": "scelta_pizza",
+      "prompt": "🍕 *Pizzeria da Mario* 🍕\\nQuale pizza desideri ordinare?\\n• *Margherita* (6.00 €)\\n• *Diavola* (7.50 €)\\n• *4 Formaggi* (8.50 €)\\n• *Capricciosa* (8.50 €)"
+    },
+    {
+      "type": "lookup",
+      "key": "{{scelta_pizza}}",
+      "template": "Hai scelto la pizza *{{nome}}* ({{prezzo}}).\\nIngredienti: {{ingredienti}}.\\n\\nA quale indirizzo e citofono desideri la consegna?",
+      "fallback": "Hai scelto *{{scelta_pizza}}*.\\nA quale indirizzo desideri la consegna a domicilio?"
+    },
+    {
+      "type": "ask",
+      "variable": "indirizzo_consegna",
+      "prompt": "Inserisci via, numero civico e città per la consegna:"
+    },
+    {
+      "type": "http",
+      "method": "POST",
+      "body": {
+        "cliente": "{{user_name}}",
+        "telefono": "{{phone}}",
+        "pizza": "{{scelta_pizza}}",
+        "indirizzo": "{{indirizzo_consegna}}"
+      },
+      "resultVariable": "ordine",
+      "template": "✅ *Ordine confermato da Pizzeria da Mario!*\\n🍕 Pizza: {{scelta_pizza}}\\n📍 Consegna: {{indirizzo_consegna}}\\n🕒 Consegna stimata: 25-30 minuti.\\n\\nGrazie {{user_name}}!",
+      "fallback": "✅ *Ordine preso in carico da Pizzeria da Mario!*\\n🍕 Pizza: {{scelta_pizza}}\\n📍 Indirizzo: {{indirizzo_consegna}}\\n📞 Ti contatteremo al {{phone}} per la consegna.\\n\\nGrazie {{user_name}}!"
+    }
+  ]
+}
