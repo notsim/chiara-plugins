@@ -7,12 +7,15 @@
 **Plugin dichiarativi, no-code e sicuri per [Chiara](https://heychiara.xyz)** — l'assistente personale su WhatsApp.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Live Sandbox](https://img.shields.io/badge/Live%20Sandbox-dev.heychiara.xyz-10b981?style=flat-square)](https://dev.heychiara.xyz)
 [![No-code](https://img.shields.io/badge/No--code-100%25-7c3aed?style=flat-square)]()
 [![Dichiarativo](https://img.shields.io/badge/Dichiarativo-JSON-6366f1?style=flat-square)]()
 [![Open Source](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-22c55e?style=flat-square)]()
 [![Schema](https://img.shields.io/badge/Schema-v1-0ea5e9?style=flat-square)]()
 
 *Scrivi un `plugin.json`, il bot fa il resto. Nessun codice sul server, zero rischi.*
+
+> 🧪 **Simulatore in tempo reale:** Prova e debugga il tuo plugin nel [**Chiara Plugin Studio su dev.heychiara.xyz**](https://dev.heychiara.xyz) prima di inviarlo!
 
 </div>
 
