@@ -4,7 +4,7 @@
   "name": "Saluto",
   "description": "Risponde ai saluti più comuni.",
   "version": "1.0.0",
-  "author": { "name": "Chiara Team", "email": "contattaci@chiara-agente.it" },
+  "author": { "name": "Chiara Team", "email": "contattaci@heychiara.xyz" },
   "tier": "free",
   "trigger": { "type": "regex", "pattern": "^(ciao|salve|hey|ehi)$", "flags": "i" },
   "actions": [

@@ -4,7 +4,7 @@
   "name": "Quiz cultura",
   "description": "Quiz a 3 domande con punteggio (flusso multi-turno).",
   "version": "1.0.0",
-  "author": { "name": "Chiara Team", "email": "contattaci@chiara-agente.it" },
+  "author": { "name": "Chiara Team", "email": "contattaci@heychiara.xyz" },
   "tier": "free",
   "trigger": { "type": "command", "command": "/quiz" },
   "data": [

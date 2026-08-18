@@ -4,7 +4,7 @@
   "name": "Calorie alimenti",
   "description": "Calorie di cibi comuni (dataset → bot).",
   "version": "1.0.0",
-  "author": { "name": "Chiara Team", "email": "contattaci@chiara-agente.it" },
+  "author": { "name": "Chiara Team", "email": "contattaci@heychiara.xyz" },
   "tier": "free",
   "trigger": { "type": "regex", "pattern": "^quante calorie\\s*(?:ci sono in|hanno|ha)?\\s*(?:una|uno|un|lo|la|il|le)?\\s*(.+)$", "flags": "i" },
   "data": [

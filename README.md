@@ -63,7 +63,7 @@ Messaggio utente
   "name": "Saluto",
   "description": "Risponde ai saluti",
   "version": "1.0.0",
-  "author": { "name": "Chiara Team", "email": "contattaci@chiara-agente.it" },
+  "author": { "name": "Chiara Team", "email": "contattaci@heychiara.xyz" },
   "tier": "free",
   "trigger": { "type": "regex", "pattern": "^(ciao|salve|hey)$", "flags": "i" },
   "actions": [
@@ -175,6 +175,6 @@ chiara-plugins/
 
 **Fatto con 💙 per la community di Chiara**
 
-[🌐 heychiara.xyz](https://heychiara.xyz) · [💬 WhatsApp](https://wa.me/393892334300) · [📧 contattaci@chiara-agente.it](mailto:contattaci@chiara-agente.it)
+[🌐 heychiara.xyz](https://heychiara.xyz) · [💬 WhatsApp](https://wa.me/393892334300) · [📧 contattaci@heychiara.xyz](mailto:contattaci@heychiara.xyz)
 
 </div>
