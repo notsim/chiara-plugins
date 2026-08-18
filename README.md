@@ -22,14 +22,15 @@
 
 | 🧩 Idea | 💡 Esempio | 🛠️ Come |
 |---|---|---|
+| 🍕 **Aziende & Ordini** | Pizzerie, barbieri, negozi, prenotazioni | `ask` + `http` webhook (es. Telegram/Make) · [👉 Guida Aziende](docs/guida-aziende.md) |
 | 📊 **Dataset → bot** | "quante calorie ha una mela?" | `data` + `lookup` |
 | 🎯 **Quiz e giochi** | quiz con punteggio | `ask` + `if` + `set` + `goto` |
 | 🧭 **Wizard e questionari** | percorsi guidati | flusso multi-turno |
 | 🧮 **Calcolatori specializzati** | IVA, mutui, conversioni | `tool` whitelistati |
 | 📚 **Contenuti interattivi** | ricette, dizionari, oroscopi | `reply` + `random` |
 
-> 💬 **Il valore della community**: chi possiede un contenuto o una competenza
-> la trasforma in una feature del bot **senza saper programmare**.
+> 💬 **Il valore per aziende & community**: chiunque possiede un'attività, un contenuto o un servizio
+> lo integra nel bot **a costo zero e senza bisogno di un sito web o server**. Leggi la [🏢 Guida Completa per Aziende](docs/guida-aziende.md).
 
 ---
 
