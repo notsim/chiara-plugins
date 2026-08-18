@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "conta",
+  "name": "Contatore",
+  "description": "Conta quante volte hai usato il comando /conta.",
+  "version": "1.0.0",
+  "author": { "name": "Chiara Team", "email": "contattaci@chiara-agente.it" },
+  "tier": "free",
+  "trigger": { "type": "command", "command": "/conta" },
+  "actions": [
+    { "type": "read", "key": "count" },
+    { "type": "tool", "tool": "CALC", "input": "{{value||0}} + 1" },
+    { "type": "store", "key": "count", "value": "{{result}}" },
+    { "type": "reply", "template": "🔢 Hai usato /conta *{{result}}* volte!" }
+  ]
+}

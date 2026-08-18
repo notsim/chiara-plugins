@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "calcola",
+  "name": "Calcolo rapido",
+  "description": "Calcola un'espressione matematica scritta in linguaggio naturale.",
+  "version": "1.0.0",
+  "author": { "name": "Chiara Team", "email": "contattaci@chiara-agente.it" },
+  "tier": "free",
+  "trigger": { "type": "regex", "pattern": "^(?:calcola|quanto fa|quanto fanno)\\s+(.+)$", "flags": "i" },
+  "actions": [
+    { "type": "tool", "tool": "CALC", "input": "{{capture:1}}", "template": "🧮 {{capture:1}} = *{{result}}*" }
+  ]
+}

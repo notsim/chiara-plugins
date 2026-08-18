@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "id": "motivation",
+  "name": "Motivazione",
+  "description": "Una frase motivazionale quando l'utente è giù di morale.",
+  "version": "1.0.0",
+  "author": { "name": "Chiara Team", "email": "contattaci@chiara-agente.it" },
+  "tier": "free",
+  "trigger": {
+    "type": "intent",
+    "intent": "l'utente è demotivato, triste, giù di morale, ansioso o cerca una spinta positiva"
+  },
+  "actions": [
+    {
+      "type": "random",
+      "options": [
+        "💪 Non serve essere perfetti per iniziare: serve iniziare per migliorare.",
+        "✨ Ogni esperto è stato prima un principiante. Continua così!",
+        "🌱 Un piccolo passo al giorno è meglio di un grande passo mai fatto.",
+        "🧗 Cadere è permesso, rialzarsi è obbligatorio."
+      ]
+    }
+  ]
+}

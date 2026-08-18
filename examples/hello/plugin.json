@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "hello",
+  "name": "Saluto",
+  "description": "Risponde ai saluti più comuni.",
+  "version": "1.0.0",
+  "author": { "name": "Chiara Team", "email": "contattaci@chiara-agente.it" },
+  "tier": "free",
+  "trigger": { "type": "regex", "pattern": "^(ciao|salve|hey|ehi)$", "flags": "i" },
+  "actions": [
+    { "type": "reply", "template": "Ciao {{user_name||amico}}! 👋 Come posso aiutarti?" }
+  ]
+}

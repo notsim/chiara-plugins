@@ -1,0 +1,14 @@
+{
+  "name": "chiara-plugins",
+  "version": "1.0.0",
+  "description": "Plugin dichiarativi (no-code) per Chiara, l'assistente personale su WhatsApp",
+  "license": "MIT",
+  "scripts": {
+    "validate": "node src/validate.js"
+  },
+  "bin": {
+    "chiara-plugin-validate": "src/validate.js"
+  },
+  "keywords": ["whatsapp", "chatbot", "plugin", "no-code", "ai"],
+  "engines": { "node": ">=18" }
+}
