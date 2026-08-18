@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "quiz",
+  "name": "Quiz cultura",
+  "description": "Quiz a 3 domande con punteggio (flusso multi-turno).",
+  "version": "1.0.0",
+  "author": { "name": "Chiara Team", "email": "contattaci@chiara-agente.it" },
+  "tier": "free",
+  "trigger": { "type": "command", "command": "/quiz" },
+  "data": [
+    { "key": "q1", "domanda": "Qual è la capitale dell'Australia?", "risposta": "canberra" },
+    { "key": "q2", "domanda": "Quanti lati ha un esagono?", "risposta": "6" },
+    { "key": "q3", "domanda": "Chi ha dipinto la Gioconda?", "risposta": "leonardo" }
+  ],
+  "actions": [
+    { "type": "set", "variable": "n", "value": "0" },
+    { "type": "set", "variable": "score", "value": "0" },
+    { "type": "set", "variable": "feedback", "value": "" },
+    { "type": "label", "id": "domanda" },
+    { "type": "tool", "tool": "CALC", "input": "{{n}} + 1" },
+    { "type": "set", "variable": "n", "value": "{{result}}" },
+    { "type": "lookup", "key": "q{{n}}" },
+    { "type": "ask", "variable": "answer", "prompt": "{{feedback}}\n\n❓ *Domanda {{n}}/3*: {{domanda}}" },
+    { "type": "if", "variable": "answer", "contains": "{{risposta}}",
+      "then": [
+        { "type": "tool", "tool": "CALC", "input": "{{score}} + 1" },
+        { "type": "set", "variable": "score", "value": "{{result}}" },
+        { "type": "set", "variable": "feedback", "value": "✅ Esatto! 👍" }
+      ],
+      "else": [
+        { "type": "set", "variable": "feedback", "value": "❌ No! La risposta era: *{{risposta}}*" }
+      ]
+    },
+    { "type": "if", "variable": "n", "equals": "3",
+      "then": [
+        { "type": "reply", "template": "{{feedback}}\n\n🏁 *Quiz finito!* Punteggio: *{{score}}/3*" },
+        { "type": "end" }
+      ]
+    },
+    { "type": "goto", "id": "domanda" }
+  ]
+}

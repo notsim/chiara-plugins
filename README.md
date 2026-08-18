@@ -4,6 +4,16 @@ Plugin **dichiarativi (no-code)** per [Chiara](https://heychiara.xyz), l'assiste
 
 Un plugin è un semplice file `plugin.json`: descrivi *quando* attivarlo e *cosa rispondere*. **Nessun codice viene eseguito sul server** — solo azioni whitelistate. Zero rischio, zero costi, 100% in locale.
 
+## Cosa puoi costruire
+
+- **Dataset → bot**: incapsula una tabella (`data` + `lookup`) e rispondi alle domande. Es. calorie alimenti, dizionario dialetto, FAQ di un negozio, orari, prezzi.
+- **Quiz e giochi**: flussi multi-turno con punteggio (`ask`, `if`, `set`, `goto`). Es. quiz di storia, indovinelli con contatore.
+- **Wizard e questionari**: percorsi guidati che fanno domande e reagiscono alle risposte.
+- **Calcolatori specializzati**: combinando `tool` whitelistati (matematica, valute, IVA, mutui, hash…).
+- **Contenuti interattivi**: frasi, ricette, checklist, consigli, oroscopi.
+
+Tutto dichiarativo: chi possiede un contenuto lo trasforma in una feature del bot **senza saper programmare**.
+
 ## Perché dichiarativo?
 
 Il bot processa messaggi da utenti sconosciuti: eseguire codice arbitrario dei plugin sarebbe una vulnerabilità (RCE). Il formato dichiarativo elimina del tutto questo rischio: il manifest viene **validato** e le azioni sono un insieme chiuso e sicuro.
@@ -27,7 +37,8 @@ Il bot processa messaggi da utenti sconosciuti: eseguire codice arbitrario dei p
 ```
 
 - **`trigger`** — quando scatta il plugin (vedi [docs/triggers.md](docs/triggers.md))
-- **`actions`** — cosa fa, in ordine (vedi [docs/actions.md](docs/actions.md))
+- **`data`** — dataset opzionale per risposte basate su tabella
+- **`actions`** — cosa fa, in ordine: risposte, lookup, tool, e flussi multi-turno (vedi [docs/actions.md](docs/actions.md))
 - **`tier`** — `free` (tutti) o `ultra` (solo piano ULTRA)
 
 ## Avvio rapido

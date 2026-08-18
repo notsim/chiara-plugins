@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "calorie",
+  "name": "Calorie alimenti",
+  "description": "Calorie di cibi comuni (dataset → bot).",
+  "version": "1.0.0",
+  "author": { "name": "Chiara Team", "email": "contattaci@chiara-agente.it" },
+  "tier": "free",
+  "trigger": { "type": "regex", "pattern": "^quante calorie\\s*(?:ci sono in|hanno|ha)?\\s*(?:una|uno|un|lo|la|il|le)?\\s*(.+)$", "flags": "i" },
+  "data": [
+    { "key": "mela", "calorie": "52 kcal / 100 g" },
+    { "key": "banana", "calorie": "89 kcal / 100 g" },
+    { "key": "pizza", "calorie": "~266 kcal / 100 g" },
+    { "key": "pasta", "calorie": "~131 kcal / 100 g (cotta)" },
+    { "key": "uovo", "calorie": "~155 kcal / uovo" }
+  ],
+  "actions": [
+    { "type": "lookup", "key": "{{capture:1}}", "template": "🍎 *{{key}}*: {{calorie}}", "fallback": "🤔 Non ho il dato per \"{{capture:1}}\". Prova con: mela, banana, pizza, pasta, uovo." }
+  ]
+}

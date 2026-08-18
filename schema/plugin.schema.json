@@ -9,8 +9,7 @@
     "schemaVersion": { "const": 1 },
     "id": {
       "type": "string",
-      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$",
-      "description": "Identificatore univoco (solo minuscole, numeri, . _ -)"
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
     },
     "name": { "type": "string", "minLength": 1 },
     "description": { "type": "string" },
@@ -23,7 +22,7 @@
         "url": { "type": "string" }
       }
     },
-    "tier": { "enum": ["free", "ultra"], "description": "free = tutti gli utenti, ultra = solo piano ULTRA" },
+    "tier": { "enum": ["free", "ultra"] },
     "trigger": {
       "type": "object",
       "oneOf": [
@@ -51,6 +50,16 @@
         }
       ]
     },
+    "data": {
+      "type": "array",
+      "description": "Dataset del plugin: ogni riga ha una chiave `key` e campi liberi (usati con l'azione `lookup`).",
+      "items": {
+        "type": "object",
+        "required": ["key"],
+        "properties": { "key": { "type": "string" } },
+        "additionalProperties": true
+      }
+    },
     "actions": {
       "type": "array",
       "minItems": 1,
@@ -61,45 +70,18 @@
     "action": {
       "type": "object",
       "oneOf": [
-        {
-          "required": ["type", "template"],
-          "properties": {
-            "type": { "const": "reply" },
-            "template": { "type": "string" }
-          }
-        },
-        {
-          "required": ["type", "options"],
-          "properties": {
-            "type": { "const": "random" },
-            "options": { "type": "array", "items": { "type": "string" }, "minItems": 1 }
-          }
-        },
-        {
-          "required": ["type", "tool"],
-          "properties": {
-            "type": { "const": "tool" },
-            "tool": { "type": "string" },
-            "input": { "type": "string" },
-            "template": { "type": "string" }
-          }
-        },
-        {
-          "required": ["type", "key"],
-          "properties": {
-            "type": { "const": "store" },
-            "key": { "type": "string" },
-            "value": { "type": "string" }
-          }
-        },
-        {
-          "required": ["type", "key"],
-          "properties": {
-            "type": { "const": "read" },
-            "key": { "type": "string" },
-            "template": { "type": "string" }
-          }
-        }
+        { "required": ["type", "template"], "properties": { "type": { "const": "reply" }, "template": { "type": "string" } } },
+        { "required": ["type", "options"], "properties": { "type": { "const": "random" }, "options": { "type": "array", "items": { "type": "string" }, "minItems": 1 } } },
+        { "required": ["type", "tool"], "properties": { "type": { "const": "tool" }, "tool": { "type": "string" }, "input": { "type": "string" }, "template": { "type": "string" } } },
+        { "required": ["type", "key"], "properties": { "type": { "const": "lookup" }, "key": { "type": "string" }, "template": { "type": "string" }, "fallback": { "type": "string" } } },
+        { "required": ["type", "key"], "properties": { "type": { "const": "store" }, "key": { "type": "string" }, "value": { "type": "string" } } },
+        { "required": ["type", "key"], "properties": { "type": { "const": "read" }, "key": { "type": "string" }, "template": { "type": "string" } } },
+        { "required": ["type", "variable"], "properties": { "type": { "const": "set" }, "variable": { "type": "string" }, "value": { "type": "string" } } },
+        { "required": ["type", "variable", "prompt"], "properties": { "type": { "const": "ask" }, "variable": { "type": "string" }, "prompt": { "type": "string" } } },
+        { "required": ["type", "variable", "then"], "properties": { "type": { "const": "if" }, "variable": { "type": "string" }, "equals": { "type": "string" }, "contains": { "type": "string" }, "then": { "type": "array", "items": { "$ref": "#/definitions/action" } }, "else": { "type": "array", "items": { "$ref": "#/definitions/action" } } } },
+        { "required": ["type", "id"], "properties": { "type": { "const": "goto" }, "id": { "type": "string" } } },
+        { "required": ["type", "id"], "properties": { "type": { "const": "label" }, "id": { "type": "string" } } },
+        { "required": ["type"], "properties": { "type": { "const": "end" } } }
       ]
     }
   }
