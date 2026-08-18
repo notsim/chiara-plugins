@@ -25,6 +25,15 @@
       }
     },
     "tier": { "enum": ["free", "ultra"] },
+    "location": {
+      "type": "object",
+      "description": "Area geografica servita dal plugin (es. per attività locali come pizzerie o barbieri).",
+      "properties": {
+        "city": { "type": "string", "description": "Città principale (es. Milano, Roma, Napoli)" },
+        "province": { "type": "string", "description": "Sigla provincia (es. MI, RM, NA)" },
+        "cap": { "type": "array", "items": { "type": "string" }, "description": "Elenco CAP coperti per consegne" }
+      }
+    },
     "permissions": {
       "type": "array",
       "description": "Permessi di accesso ai dati dell'utente (es. phone, name, email, address).",
