@@ -1,24 +1,60 @@
-# Chiara Plugins
+<div align="center">
 
-Plugin **dichiarativi (no-code)** per [Chiara](https://heychiara.xyz), l'assistente personale su WhatsApp.
+<img src="assets/banner.png" alt="Chiara Plugins" width="100%" />
 
-Un plugin è un semplice file `plugin.json`: descrivi *quando* attivarlo e *cosa rispondere*. **Nessun codice viene eseguito sul server** — solo azioni whitelistate. Zero rischio, zero costi, 100% in locale.
+# 🧩 Chiara Plugins
 
-## Cosa puoi costruire
+**Plugin dichiarativi, no-code e sicuri per [Chiara](https://heychiara.xyz)** — l'assistente personale su WhatsApp.
 
-- **Dataset → bot**: incapsula una tabella (`data` + `lookup`) e rispondi alle domande. Es. calorie alimenti, dizionario dialetto, FAQ di un negozio, orari, prezzi.
-- **Quiz e giochi**: flussi multi-turno con punteggio (`ask`, `if`, `set`, `goto`). Es. quiz di storia, indovinelli con contatore.
-- **Wizard e questionari**: percorsi guidati che fanno domande e reagiscono alle risposte.
-- **Calcolatori specializzati**: combinando `tool` whitelistati (matematica, valute, IVA, mutui, hash…).
-- **Contenuti interattivi**: frasi, ricette, checklist, consigli, oroscopi.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![No-code](https://img.shields.io/badge/No--code-100%25-7c3aed?style=flat-square)]()
+[![Dichiarativo](https://img.shields.io/badge/Dichiarativo-JSON-6366f1?style=flat-square)]()
+[![Open Source](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-22c55e?style=flat-square)]()
+[![Schema](https://img.shields.io/badge/Schema-v1-0ea5e9?style=flat-square)]()
 
-Tutto dichiarativo: chi possiede un contenuto lo trasforma in una feature del bot **senza saper programmare**.
+*Scrivi un `plugin.json`, il bot fa il resto. Nessun codice sul server, zero rischi.*
 
-## Perché dichiarativo?
+</div>
 
-Il bot processa messaggi da utenti sconosciuti: eseguire codice arbitrario dei plugin sarebbe una vulnerabilità (RCE). Il formato dichiarativo elimina del tutto questo rischio: il manifest viene **validato** e le azioni sono un insieme chiuso e sicuro.
+---
 
-## Anatomia di un plugin
+## ✨ Cosa puoi costruire
+
+| 🧩 Idea | 💡 Esempio | 🛠️ Come |
+|---|---|---|
+| 📊 **Dataset → bot** | "quante calorie ha una mela?" | `data` + `lookup` |
+| 🎯 **Quiz e giochi** | quiz con punteggio | `ask` + `if` + `set` + `goto` |
+| 🧭 **Wizard e questionari** | percorsi guidati | flusso multi-turno |
+| 🧮 **Calcolatori specializzati** | IVA, mutui, conversioni | `tool` whitelistati |
+| 📚 **Contenuti interattivi** | ricette, dizionari, oroscopi | `reply` + `random` |
+
+> 💬 **Il valore della community**: chi possiede un contenuto o una competenza
+> la trasforma in una feature del bot **senza saper programmare**.
+
+---
+
+## 🔄 Come funziona
+
+```
+Messaggio utente
+      │
+      ▼
+┌─────────────────────┐     match?      ┌──────────────────────┐
+│  TRIGGER             │ ──────────────▶ │  AZIONI (in ordine)  │
+│  regex / command /   │                │  reply · lookup ·    │
+│  intent (AI)         │                │  tool · ask · if …   │
+└─────────────────────┘                └──────────┬───────────┘
+                                                  ▼
+                                        📤 Risposta su WhatsApp
+```
+
+- **Trigger** = quando scatta
+- **Azioni** = cosa fa
+- **Stato** = cosa ricorda per utente (flussi multi-turno)
+
+---
+
+## 🧬 Anatomia di un plugin
 
 ```json
 {
@@ -36,38 +72,109 @@ Il bot processa messaggi da utenti sconosciuti: eseguire codice arbitrario dei p
 }
 ```
 
-- **`trigger`** — quando scatta il plugin (vedi [docs/triggers.md](docs/triggers.md))
-- **`data`** — dataset opzionale per risposte basate su tabella
-- **`actions`** — cosa fa, in ordine: risposte, lookup, tool, e flussi multi-turno (vedi [docs/actions.md](docs/actions.md))
-- **`tier`** — `free` (tutti) o `ultra` (solo piano ULTRA)
+---
 
-## Avvio rapido
+## 🎯 Trigger
 
-1. Copia `examples/hello/` e modifica `plugin.json`.
-2. Valida:
-   ```bash
-   npm run validate examples
-   ```
-3. Invia una **Pull Request**: i plugin in `plugins/` sono **curati** (ogni contributo passa una review manuale prima di finire in produzione).
+| Tipo | Quando scatta | Esempio |
+|---|---|---|
+| 🔤 `regex` | match su espressione regolare | `"^(ciao|salve)$"` |
+| ⌨️ `command` | comando esatto | `"/quiz"` |
+| 🧠 `intent` | l'AI riconosce l'intenzione | `"l'utente è giù di morale"` |
 
-## Struttura del repo
+---
+
+## ⚙️ Azioni
+
+| Azione | Cosa fa |
+|---|---|
+| 💬 `reply` | risponde con un template |
+| 🎲 `random` | sceglie una tra più risposte |
+| 🛠️ `tool` | chiama un tool whitelistato (calcoli, meteo, valute…) |
+| 🔍 `lookup` | cerca una voce nel **dataset** |
+| 💾 `store` / `read` | stato persistente per utente |
+| ✏️ `set` | assegna una variabile |
+| ❓ `ask` | fa una domanda e aspetta la risposta |
+| 🔀 `if` | ramo condizionale (`then` / `else`) |
+| 🔁 `goto` / `label` | salti e loop |
+| 🏁 `end` | termina il flusso |
+
+---
+
+## 🎬 Demo dal vivo
+
+**Quiz multi-turno con punteggio** (`examples/quiz`):
 
 ```
-├── schema/plugin.schema.json   # JSON Schema del manifest (draft-07)
-├── src/validate.js             # validatore standalone (CLI, zero dipendenze)
-├── examples/                   # plugin d'esempio (hello, calcola, motivation, conta)
-├── plugins/                    # plugin curati che girano in produzione
-└── docs/                       # triggers.md, actions.md, getting-started.md
+👤 /quiz
+🤖 ❓ Domanda 1/3: Qual è la capitale dell'Australia?
+👤 canberra
+🤖 ✅ Esatto! 👍  ❓ Domanda 2/3: Quanti lati ha un esagono?
+👤 6
+🤖 ✅ Esatto! 👍  ❓ Domanda 3/3: Chi ha dipinto la Gioconda?
+👤 leonardo
+🤖 ✅ Esatto! 👍  🏁 Quiz finito! Punteggio: 3/3
 ```
 
-## Documentazione
+**Dataset → bot** (`examples/calorie`):
+
+```
+👤 quante calorie ha una mela?
+🤖 🍎 mela: 52 kcal / 100 g
+```
+
+---
+
+## 🚀 Avvio rapido
+
+```bash
+# 1. Copia un esempio
+cp -r examples/hello mio-plugin
+
+# 2. Modifica plugin.json
+
+# 3. Valida
+npm run validate mio-plugin
+
+# 4. Apri una Pull Request ✨
+```
+
+---
+
+## 📁 Struttura del repo
+
+```
+chiara-plugins/
+├── assets/banner.png          # banner
+├── schema/plugin.schema.json  # JSON Schema (draft-07)
+├── src/validate.js            # validatore CLI (zero dipendenze)
+├── examples/                  # hello, calcola, calorie, quiz, conta, motivation
+├── plugins/                   # plugin curati (in produzione)
+└── docs/                      # triggers.md · actions.md · getting-started.md
+```
+
+---
+
+## 🔐 Sicurezza
+
+- 🚫 **Nessun codice utente**: solo azioni whitelistate (niente `eval`, shell o rete).
+- 🛡️ **Fail-safe**: un manifest non valido viene ignorato, mai blocca il bot.
+- 👀 **Curato**: ogni plugin entra in produzione solo dopo **review manuale**.
+
+---
+
+## 📖 Documentazione
 
 - [Guida introduttiva](docs/getting-started.md)
 - [Trigger](docs/triggers.md)
 - [Azioni](docs/actions.md)
 
-## Sicurezza
+---
 
-- Solo azioni whitelistate (nessun `eval`, nessun comando shell, nessuna rete).
-- Un manifest non valido viene **saltato** (mai blocca il bot).
-- I plugin entrano in produzione solo dopo **review manuale**.
+<div align="center">
+
+**Fatto con 💙 per la community di Chiara**
+
+[🌐 heychiara.xyz](https://heychiara.xyz) · [💬 WhatsApp](https://wa.me/393892334300) · [📧 contattaci@chiara-agente.it](mailto:contattaci@chiara-agente.it)
+
+</div>
